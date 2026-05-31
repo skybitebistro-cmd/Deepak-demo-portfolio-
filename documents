@@ -1,0 +1,738 @@
+# 🧬 Complete Bioinformatics Portfolio System
+## Projects · Visual Assets · Video Content · Freelance · Deployment · ATS
+
+---
+
+# SECTION 1 — REPOSITORY STRUCTURE
+
+```
+your-github-username.github.io/          ← GitHub Pages root (rename repo to this)
+│
+├── README.md                            ← Main portfolio landing page
+├── index.html                           ← GitHub Pages HTML portfolio (optional)
+│
+├── assets/
+│   ├── images/
+│   │   ├── banner.gif                   ← Animated header banner
+│   │   ├── profile.jpg                  ← Your profile photo
+│   │   ├── project01_thumb.png          ← QC project thumbnail
+│   │   ├── project02_thumb.png          ← DE analysis thumbnail
+│   │   ├── project03_thumb.png          ← Visualization thumbnail
+│   │   ├── project04_thumb.png          ← Linux pipeline thumbnail
+│   │   ├── project05_thumb.png          ← GEO analysis thumbnail
+│   │   └── project06_thumb.png          ← AI media thumbnail
+│   ├── gifs/
+│   │   ├── fastqc_demo.gif              ← Screen recording of FastQC running
+│   │   ├── heatmap_build.gif            ← R heatmap being generated
+│   │   └── pipeline_run.gif             ← Bash pipeline executing
+│   └── videos/
+│       ├── project01_walkthrough.mp4    ← 30-60s QC walkthrough
+│       ├── project02_walkthrough.mp4    ← DE analysis walkthrough
+│       └── project06_ai_reel.mp4        ← AI media showcase
+│
+├── projects/
+│   ├── project_01_rnaseq_qc/
+│   │   ├── README.md
+│   │   ├── scripts/
+│   │   │   ├── 01_download_fastq.sh
+│   │   │   ├── 02_run_fastqc.sh
+│   │   │   └── 03_run_multiqc.sh
+│   │   ├── results/
+│   │   │   ├── fastqc_reports/          ← HTML reports (committed)
+│   │   │   └── multiqc_report.html
+│   │   └── docs/
+│   │       └── interpretation_notes.md
+│   │
+│   ├── project_02_differential_expression/
+│   │   ├── README.md
+│   │   ├── scripts/
+│   │   │   ├── 01_load_data.R
+│   │   │   ├── 02_deseq2_analysis.R
+│   │   │   └── 03_results_export.R
+│   │   ├── data/
+│   │   │   └── download_instructions.md ← Never commit raw data; explain how to get it
+│   │   ├── results/
+│   │   │   ├── DEG_results.csv
+│   │   │   └── volcano_plot.png
+│   │   └── report/
+│   │       └── analysis_report.Rmd      ← R Markdown reproducible report
+│   │
+│   ├── project_03_visualization/
+│   │   ├── README.md
+│   │   ├── scripts/
+│   │   │   ├── 01_heatmap.R
+│   │   │   ├── 02_pca_plot.R
+│   │   │   └── 03_volcano_plot.R
+│   │   └── results/
+│   │       ├── heatmap_top50genes.png
+│   │       ├── pca_samples.png
+│   │       └── volcano_plot.png
+│   │
+│   ├── project_04_linux_pipeline/
+│   │   ├── README.md
+│   │   ├── pipeline.sh                  ← Main automation script
+│   │   ├── config.sh                    ← User-editable configuration
+│   │   └── logs/
+│   │       └── example_run.log          ← Example output log
+│   │
+│   ├── project_05_public_dataset_analysis/
+│   │   ├── README.md
+│   │   ├── scripts/
+│   │   │   ├── 01_geo_download.R
+│   │   │   ├── 02_eda.R
+│   │   │   ├── 03_deseq2.R
+│   │   │   └── 04_enrichment.R
+│   │   ├── results/
+│   │   └── report/
+│   │       └── full_analysis.Rmd
+│   │
+│   └── project_06_ai_science_media/
+│       ├── README.md
+│       ├── gallery/
+│       │   ├── image_01_dna_replication.png
+│       │   ├── image_02_rna_seq_concept.png
+│       │   └── image_03_gene_expression.png
+│       ├── prompts/
+│       │   └── all_prompts_used.md      ← Exact prompts for reproducibility
+│       └── videos/
+│           └── science_reel_01.mp4
+│
+├── certificates/
+│   ├── README.md                        ← List of certifications with links
+│   └── [certificate_name].pdf           ← Uploaded certificate files
+│
+├── resume/
+│   ├── README.md
+│   └── resume_yourname_bioinformatics.pdf
+│
+├── blog/
+│   ├── README.md                        ← Link to external blog if applicable
+│   ├── post_01_what_is_rnaseq.md
+│   ├── post_02_fastqc_beginners.md
+│   └── post_03_deseq2_walkthrough.md
+│
+└── contact/
+    └── README.md                        ← Contact info + services
+```
+
+**Folder Purpose Summary:**
+- `assets/` — All visual content (images, GIFs, videos) referenced in README and HTML
+- `projects/` — Core technical work; each subfolder is a standalone reproducible project
+- `certificates/` — Proof of structured learning (Coursera, edX, DataCamp, etc.)
+- `resume/` — PDF resume optimized for bioinformatics roles
+- `blog/` — Written learning content; builds credibility and SEO
+- `contact/` — Services, pricing, contact info
+
+---
+
+# SECTION 3 — COMPLETE PROJECT GUIDES
+
+---
+
+## PROJECT 01 — RNA-seq Quality Control with FastQC & MultiQC
+
+### `projects/project_01_rnaseq_qc/README.md`
+
+---
+
+**🎯 Objective**
+
+Perform quality control on publicly available RNA-seq FASTQ files to assess read quality, adapter contamination, per-base sequence quality, GC content distribution, and sequence duplication levels.
+
+**⚠️ Skill Level:** Beginner-Intermediate | ~1 year learning | Part of self-directed portfolio
+
+---
+
+**📦 Public Dataset**
+
+| Field | Details |
+|---|---|
+| **Source** | NCBI Sequence Read Archive (SRA) |
+| **Accession** | SRR390728 |
+| **Organism** | *Escherichia coli* |
+| **Experiment type** | RNA-seq |
+| **Why this dataset?** | Small file size (~200MB), well-documented, ideal for learning |
+| **Download URL** | https://www.ncbi.nlm.nih.gov/sra/SRR390728 |
+
+---
+
+**📁 Folder Structure**
+
+```
+project_01_rnaseq_qc/
+├── README.md
+├── scripts/
+│   ├── 01_download_fastq.sh
+│   ├── 02_run_fastqc.sh
+│   └── 03_run_multiqc.sh
+├── results/
+│   ├── fastqc_reports/
+│   │   ├── SRR390728_fastqc.html
+│   │   └── SRR390728_fastqc.zip
+│   └── multiqc_report.html
+└── docs/
+    └── interpretation_notes.md
+```
+
+---
+
+**🔧 Tools Used**
+
+| Tool | Version | Purpose |
+|---|---|---|
+| SRA Toolkit | 3.0+ | Download FASTQ from NCBI |
+| FastQC | 0.12.1 | Per-sample quality assessment |
+| MultiQC | 1.21 | Aggregate QC report |
+| Trimmomatic | 0.39 | Adapter trimming (optional step) |
+| Ubuntu/Linux | 20.04+ | Operating system |
+
+---
+
+**⚙️ Complete Workflow & Commands**
+
+```bash
+# ============================
+# SCRIPT 01: Download FASTQ
+# File: scripts/01_download_fastq.sh
+# ============================
+
+#!/bin/bash
+set -euo pipefail
+
+# Configuration
+ACCESSION="SRR390728"
+OUTPUT_DIR="data/raw"
+
+# Create directories
+mkdir -p ${OUTPUT_DIR}
+
+echo "Downloading ${ACCESSION} from SRA..."
+
+# Method 1: SRA Toolkit (preferred)
+prefetch ${ACCESSION}
+fastq-dump --outdir ${OUTPUT_DIR} \
+           --gzip \
+           --skip-technical \
+           --readids \
+           --read-filter pass \
+           --dumpbase \
+           --split-3 \
+           --clip \
+           ${ACCESSION}
+
+echo "Download complete. Files saved to ${OUTPUT_DIR}/"
+ls -lh ${OUTPUT_DIR}/
+
+# ============================
+# SCRIPT 02: Run FastQC
+# File: scripts/02_run_fastqc.sh
+# ============================
+
+#!/bin/bash
+set -euo pipefail
+
+INPUT_DIR="data/raw"
+OUTPUT_DIR="results/fastqc_reports"
+THREADS=4
+
+mkdir -p ${OUTPUT_DIR}
+
+echo "Running FastQC on all FASTQ files..."
+
+fastqc \
+  --outdir ${OUTPUT_DIR} \
+  --threads ${THREADS} \
+  --extract \
+  ${INPUT_DIR}/*.fastq.gz
+
+echo "FastQC complete. Reports in ${OUTPUT_DIR}/"
+
+# ============================
+# SCRIPT 03: Run MultiQC
+# File: scripts/03_run_multiqc.sh
+# ============================
+
+#!/bin/bash
+set -euo pipefail
+
+INPUT_DIR="results/fastqc_reports"
+OUTPUT_DIR="results"
+
+echo "Aggregating QC reports with MultiQC..."
+
+multiqc \
+  ${INPUT_DIR} \
+  --outdir ${OUTPUT_DIR} \
+  --filename "multiqc_report" \
+  --title "RNA-seq QC Report — SRR390728" \
+  --comment "Portfolio project: self-directed learning"
+
+echo "MultiQC report generated: ${OUTPUT_DIR}/multiqc_report.html"
+```
+
+---
+
+**📊 Expected Outputs**
+
+- `results/fastqc_reports/SRR390728_fastqc.html` — Interactive per-sample QC report
+- `results/multiqc_report.html` — Aggregated summary (open in browser)
+- Key metrics to examine:
+  - Per-base sequence quality (Phred scores >30 = good)
+  - Adapter content (should be low or absent)
+  - GC content (should match organism expectation ~51% for E. coli)
+  - Sequence duplication levels
+
+---
+
+**⚠️ Limitations & Honest Notes**
+
+- This is a learning exercise; interpretation skills are still developing
+- SRR390728 is a single-end library; paired-end analysis differs
+- I did not perform alignment in this project (future improvement)
+- Trimmomatic step is demonstrated but not benchmarked for optimal parameters
+
+---
+
+**📸 Screenshots Required**
+
+1. Terminal showing FastQC running successfully
+2. FastQC HTML report — per-base quality screenshot
+3. MultiQC aggregated report overview
+4. GC content distribution panel
+
+---
+
+**📈 Results Summary**
+
+> *Note: Fill this in after running the analysis. Example:*
+> "SRR390728 showed overall high per-base quality (Phred >30 for 85% of bases).
+> Minimal adapter contamination detected. GC content ~51%, consistent with E. coli genome.
+> MultiQC flagged moderate sequence duplication, typical for bacterial RNA-seq."
+
+---
+
+**🔮 Future Improvements**
+
+- [ ] Add alignment step with HISAT2 or STAR
+- [ ] Include before/after trimming comparison
+- [ ] Automate with Snakemake
+- [ ] Add paired-end example
+
+---
+
+**⏱️ Time Required:** 4–8 hours (including download time)
+**📌 GitHub Repo Name:** `rnaseq-qc-fastqc-multiqc`
+
+---
+
+## PROJECT 02 — Differential Expression Analysis with DESeq2
+
+### `projects/project_02_differential_expression/README.md`
+
+---
+
+**🎯 Objective**
+
+Identify statistically significant differentially expressed genes (DEGs) between two biological conditions using DESeq2, starting from a publicly available count matrix.
+
+**⚠️ Skill Level:** Intermediate | ~1 year learning | Self-directed portfolio
+
+---
+
+**📦 Public Dataset**
+
+| Field | Details |
+|---|---|
+| **Source** | NCBI GEO |
+| **Accession** | GSE96870 |
+| **Organism** | *Mus musculus* (mouse) |
+| **Experiment** | Lung RNA-seq, infected vs control |
+| **Why this dataset?** | Clean count matrix available, well-cited, beginner-friendly |
+| **GEO Link** | https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE96870 |
+
+---
+
+**📁 Folder Structure**
+
+```
+project_02_differential_expression/
+├── README.md
+├── scripts/
+│   ├── 01_load_data.R
+│   ├── 02_deseq2_analysis.R
+│   └── 03_results_export.R
+├── data/
+│   └── download_instructions.md
+├── results/
+│   ├── DEG_results_all.csv
+│   ├── DEG_results_significant.csv
+│   └── volcano_plot.png
+└── report/
+    └── analysis_report.Rmd
+```
+
+---
+
+**🔧 Tools Used**
+
+| Tool | Version | Purpose |
+|---|---|---|
+| R | 4.3+ | Analysis environment |
+| DESeq2 | 1.42+ | Differential expression |
+| tidyverse | 2.0+ | Data manipulation |
+| ggplot2 | 3.5+ | Visualization |
+| GEOquery | 2.70+ | GEO data retrieval |
+| EnhancedVolcano | 1.20+ | Volcano plot |
+
+---
+
+**⚙️ Complete R Scripts**
+
+```r
+# ============================
+# SCRIPT 01: Load Data
+# File: scripts/01_load_data.R
+# ============================
+
+# Install packages if needed (run once)
+# if (!require("BiocManager")) install.packages("BiocManager")
+# BiocManager::install(c("DESeq2", "GEOquery", "EnhancedVolcano"))
+# install.packages(c("tidyverse", "ggplot2"))
+
+library(GEOquery)
+library(tidyverse)
+
+# Download GSE96870 from GEO
+gse <- getGEO("GSE96870", GSEMatrix = TRUE)
+
+# Extract phenotype data
+pheno_data <- pData(gse[[1]])
+print(head(pheno_data))
+
+# NOTE: For count matrix, download supplementary files from GEO page:
+# GSE96870_counts_mouse.txt.gz (available on GEO supplementary)
+
+# Load count matrix
+counts <- read.table("data/GSE96870_counts_mouse.txt.gz",
+                     header = TRUE,
+                     row.names = 1,
+                     sep = "\t")
+
+cat("Count matrix dimensions:", dim(counts), "\n")
+cat("First few genes:\n")
+print(head(counts[, 1:5]))
+
+# ============================
+# SCRIPT 02: DESeq2 Analysis
+# File: scripts/02_deseq2_analysis.R
+# ============================
+
+library(DESeq2)
+library(tidyverse)
+
+# Load count matrix (from script 01)
+counts <- read.table("data/GSE96870_counts_mouse.txt.gz",
+                     header = TRUE,
+                     row.names = 1,
+                     sep = "\t")
+
+# Create sample metadata
+# Adjust column groupings based on actual sample names
+col_data <- data.frame(
+  sample = colnames(counts),
+  condition = c(rep("control", 4), rep("infected", 4)),  # adjust as needed
+  row.names = colnames(counts)
+)
+
+cat("Sample metadata:\n")
+print(col_data)
+
+# Ensure factor levels
+col_data$condition <- factor(col_data$condition,
+                              levels = c("control", "infected"))
+
+# Create DESeq2 object
+dds <- DESeqDataSetFromMatrix(
+  countData = counts,
+  colData = col_data,
+  design = ~ condition
+)
+
+# Pre-filtering: remove very low count genes
+keep <- rowSums(counts(dds) >= 10) >= 3
+dds <- dds[keep, ]
+cat("Genes after filtering:", nrow(dds), "\n")
+
+# Run DESeq2
+dds <- DESeq(dds)
+
+# Get results
+res <- results(dds,
+               contrast = c("condition", "infected", "control"),
+               alpha = 0.05)
+
+# Summary
+summary(res)
+
+# Save R object
+saveRDS(dds, "results/dds_object.rds")
+saveRDS(res, "results/deseq2_results.rds")
+
+# ============================
+# SCRIPT 03: Export Results
+# File: scripts/03_results_export.R
+# ============================
+
+library(DESeq2)
+library(EnhancedVolcano)
+library(tidyverse)
+
+# Load saved results
+res <- readRDS("results/deseq2_results.rds")
+
+# Convert to data frame
+res_df <- as.data.frame(res) %>%
+  rownames_to_column("gene_id") %>%
+  arrange(padj)
+
+# Export all results
+write.csv(res_df,
+          "results/DEG_results_all.csv",
+          row.names = FALSE)
+
+# Export significant DEGs (padj < 0.05, |log2FC| > 1)
+sig_degs <- res_df %>%
+  filter(padj < 0.05, abs(log2FoldChange) > 1) %>%
+  arrange(padj)
+
+write.csv(sig_degs,
+          "results/DEG_results_significant.csv",
+          row.names = FALSE)
+
+cat("Total significant DEGs:", nrow(sig_degs), "\n")
+cat("Upregulated:", sum(sig_degs$log2FoldChange > 0), "\n")
+cat("Downregulated:", sum(sig_degs$log2FoldChange < 0), "\n")
+
+# Volcano plot
+png("results/volcano_plot.png", width = 2400, height = 2000, res = 300)
+EnhancedVolcano(res,
+  lab = rownames(res),
+  x = "log2FoldChange",
+  y = "pvalue",
+  title = "Infected vs Control — GSE96870",
+  subtitle = "DESeq2 | padj < 0.05 | |log2FC| > 1",
+  pCutoff = 0.05,
+  FCcutoff = 1,
+  pointSize = 2,
+  labSize = 3,
+  col = c("grey70", "grey70", "#00B4D8", "#E63946"),
+  legendPosition = "right"
+)
+dev.off()
+
+# Session info for reproducibility
+cat("\n--- Session Info ---\n")
+sessionInfo()
+```
+
+---
+
+**📊 Expected Outputs**
+
+- `results/DEG_results_all.csv` — All genes with log2FC, p-value, padj
+- `results/DEG_results_significant.csv` — Filtered significant DEGs
+- `results/volcano_plot.png` — Publication-quality volcano plot
+
+---
+
+**⚠️ Limitations & Honest Notes**
+
+- GSE96870 metadata requires manual inspection to assign conditions correctly
+- I am still learning biological interpretation of DEG lists
+- No pathway enrichment analysis performed (planned for Project 05)
+- Results should not be interpreted as novel findings; this is a learning exercise
+
+---
+
+**⏱️ Time Required:** 6–12 hours
+**📌 GitHub Repo Name:** `differential-expression-deseq2-r`
+
+---
+
+## PROJECT 03 — Heatmaps & PCA Visualization in R
+
+### `projects/project_03_visualization/README.md`
+
+---
+
+**🎯 Objective**
+
+Create publication-quality heatmaps and PCA plots from RNA-seq count data. Focus on visual communication skills for biological data.
+
+**⚠️ Skill Level:** Beginner-Intermediate | Self-directed learning
+
+---
+
+**📦 Dataset:** GEO GSE96870 (same as Project 02)
+
+---
+
+**⚙️ Complete R Scripts**
+
+```r
+# ============================
+# SCRIPT 01: Heatmap
+# File: scripts/01_heatmap.R
+# ============================
+
+library(DESeq2)
+library(pheatmap)
+library(RColorBrewer)
+library(tidyverse)
+
+# Load DESeq2 object from Project 02
+dds <- readRDS("../project_02_differential_expression/results/dds_object.rds")
+
+# Variance-stabilizing transformation for visualization
+vsd <- vst(dds, blind = FALSE)
+
+# Get top 50 most variable genes
+rv <- rowVars(assay(vsd))
+top50 <- order(rv, decreasing = TRUE)[1:50]
+
+# Create annotation
+annotation_col <- data.frame(
+  Condition = colData(dds)$condition,
+  row.names = colnames(dds)
+)
+
+# Color palettes
+ann_colors <- list(
+  Condition = c(control = "#4ECDC4", infected = "#E63946")
+)
+
+# Plot heatmap
+png("results/heatmap_top50genes.png", width = 2800, height = 3200, res = 300)
+pheatmap(
+  assay(vsd)[top50, ],
+  annotation_col = annotation_col,
+  annotation_colors = ann_colors,
+  color = colorRampPalette(rev(brewer.pal(11, "RdBu")))(100),
+  scale = "row",
+  show_rownames = TRUE,
+  show_colnames = TRUE,
+  fontsize_row = 6,
+  fontsize_col = 8,
+  main = "Top 50 Most Variable Genes\nGSE96870 — Infected vs Control",
+  clustering_distance_rows = "euclidean",
+  clustering_distance_cols = "euclidean",
+  clustering_method = "ward.D2"
+)
+dev.off()
+
+cat("Heatmap saved: results/heatmap_top50genes.png\n")
+
+# ============================
+# SCRIPT 02: PCA Plot
+# File: scripts/02_pca_plot.R
+# ============================
+
+library(DESeq2)
+library(ggplot2)
+library(ggrepel)
+
+dds <- readRDS("../project_02_differential_expression/results/dds_object.rds")
+vsd <- vst(dds, blind = FALSE)
+
+# PCA using DESeq2 built-in
+pca_data <- plotPCA(vsd,
+                    intgroup = "condition",
+                    returnData = TRUE)
+
+percent_var <- round(100 * attr(pca_data, "percentVar"), 1)
+
+# Custom ggplot2 PCA
+pca_plot <- ggplot(pca_data, aes(PC1, PC2,
+                                  color = condition,
+                                  label = name)) +
+  geom_point(size = 5, alpha = 0.85) +
+  geom_text_repel(size = 3, max.overlaps = 10) +
+  scale_color_manual(values = c(control = "#4ECDC4", infected = "#E63946")) +
+  labs(
+    title = "PCA of RNA-seq Samples",
+    subtitle = "GSE96870 — Variance-Stabilized Counts",
+    x = paste0("PC1 (", percent_var[1], "% variance)"),
+    y = paste0("PC2 (", percent_var[2], "% variance)"),
+    color = "Condition"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    legend.position = "right",
+    panel.grid.minor = element_blank()
+  )
+
+ggsave("results/pca_samples.png",
+       pca_plot,
+       width = 10, height = 8, dpi = 300)
+
+cat("PCA plot saved: results/pca_samples.png\n")
+
+# ============================
+# SCRIPT 03: Volcano Plot (standalone)
+# File: scripts/03_volcano_plot.R
+# ============================
+
+library(ggplot2)
+library(dplyr)
+
+# Load DESeq2 results
+res_df <- read.csv("../project_02_differential_expression/results/DEG_results_all.csv")
+
+# Add significance category
+res_df <- res_df %>%
+  mutate(
+    significance = case_when(
+      padj < 0.05 & log2FoldChange > 1  ~ "Upregulated",
+      padj < 0.05 & log2FoldChange < -1 ~ "Downregulated",
+      TRUE                               ~ "Not significant"
+    )
+  ) %>%
+  filter(!is.na(padj))  # remove NA rows
+
+# Count DEGs
+cat("Upregulated:", sum(res_df$significance == "Upregulated"), "\n")
+cat("Downregulated:", sum(res_df$significance == "Downregulated"), "\n")
+
+# Volcano plot with ggplot2
+volcano <- ggplot(res_df, aes(x = log2FoldChange,
+                               y = -log10(pvalue),
+                               color = significance)) +
+  geom_point(alpha = 0.5, size = 1.5) +
+  scale_color_manual(values = c(
+    "Upregulated"     = "#E63946",
+    "Downregulated"   = "#00B4D8",
+    "Not significant" = "grey70"
+  )) +
+  geom_vline(xintercept = c(-1, 1), linetype = "dashed", color = "black", alpha = 0.4) +
+  geom_hline(yintercept = -log10(0.05), linetype = "dashed", color = "black", alpha = 0.4) +
+  labs(
+    title = "Volcano Plot — Infected vs Control",
+    subtitle = "GSE96870 | DESeq2 | padj < 0.05, |log2FC| > 1",
+    x = "log2 Fold Change",
+    y = "-log10(p-value)",
+    color = "Significance"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(plot.title = element_text(face = "bold"))
+
+ggsave("results/volcano_plot_ggplot.png",
+       volcano, width = 10, height = 8, dpi = 300)
+
+cat("Volcano plot saved.\n")
+sessionInfo()
+```
+
+---
+
+**📊 Expecte
